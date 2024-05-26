@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Add Point</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script>
         function addPoint() {
             // Get the user input
@@ -22,11 +24,26 @@
 
                 var coordinatesCell = newRow.insertCell();
                 coordinatesCell.innerHTML = latitude + ", " + longitude;
+
+                // Create a marker for the new point
+                var marker = L.marker([latitude, longitude]).addTo(map);
             });
+        }
+
+        var map;
+
+        // Initialize the map
+        function initMap() {
+            map = L.map('map').setView([0, 0], 2);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+            }).addTo(map);
         }
     </script>
 </head>
-<body>
+<body onload="initMap()">
     <h1>Add Point</h1>
     <label for="number">Enter a number between 1 and 10:</label>
     <input type="number" id="number" min="1" max="10">
@@ -37,5 +54,6 @@
             <th>Coordinates</th>
         </tr>
     </table>
+    <div id="map" style="height: 400px;"></div>
 </body>
 </html>
