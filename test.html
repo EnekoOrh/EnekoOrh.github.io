@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Point</title>
+    <script>
+        function addPoint() {
+            // Get the user input
+            var number = document.getElementById("number").value;
+
+            // Get the current position
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+
+                // Create a new row in the table
+                var table = document.getElementById("pointsTable");
+                var newRow = table.insertRow();
+
+                // Insert the number and coordinates into the new row
+                var numberCell = newRow.insertCell();
+                numberCell.innerHTML = number;
+
+                var coordinatesCell = newRow.insertCell();
+                coordinatesCell.innerHTML = latitude + ", " + longitude;
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Add Point</h1>
+    <label for="number">Enter a number between 1 and 10:</label>
+    <input type="number" id="number" min="1" max="10">
+    <button onclick="addPoint()">Add Point</button>
+    <table id="pointsTable">
+        <tr>
+            <th>Number</th>
+            <th>Coordinates</th>
+        </tr>
+    </table>
+</body>
+</html>
